@@ -1,0 +1,100 @@
+<div class="container p-6 bg-white rounded-xl shadow-md">
+  <h2 class="title text-xl font-semibold mb-5">Add Monitoring Device</h2>
+
+  <!-- Form fields for device type, edge controller, description, and product name -->
+  <div class="form-container bg-gray-50 p-5 rounded-xl">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
+      <div class="input-group flex flex-col">
+        <label class="font-semibold text-sm mb-2">Device Type *</label>
+        <input type="text" [(ngModel)]="device.deviceType" (blur)="markAsTouched('deviceType')" class="border rounded-lg p-2 w-full" />
+        <p class="text-red-500 text-xs mt-1" *ngIf="touchedFields.deviceType && !device.deviceType">Device Type is required</p>
+      </div>
+
+      <div class="input-group flex flex-col">
+        <label class="font-semibold text-sm mb-2">Edge Controller/Meter/Sensor *</label>
+        <input type="text" [(ngModel)]="device.edgeController" (blur)="markAsTouched('edgeController')" class="border rounded-lg p-2 w-full" />
+        <p class="text-red-500 text-xs mt-1" *ngIf="touchedFields.edgeController && !device.edgeController">Edge Controller is required</p>
+      </div>
+
+      <div class="input-group flex flex-col">
+        <label class="font-semibold text-sm mb-2">Description *</label>
+        <input type="text" [(ngModel)]="device.description" (blur)="markAsTouched('description')" class="border rounded-lg p-2 w-full" />
+        <p class="text-red-500 text-xs mt-1" *ngIf="touchedFields.description && !device.description">Description is required</p>
+      </div>
+
+      <div class="input-group flex flex-col">
+        <label class="font-semibold text-sm mb-2">Product Name *</label>
+        <input type="text" [(ngModel)]="device.productName" (blur)="markAsTouched('productName')" class="border rounded-lg p-2 w-full" />
+        <p class="text-red-500 text-xs mt-1" *ngIf="touchedFields.productName && !device.productName">Product Name is required</p>
+      </div>
+    </div>
+
+    <div class="flex items-center mt-5">
+      <input type="checkbox" [(ngModel)]="device.active" class="w-5 h-5 mr-3" />
+      <label class="text-sm">Active</label>
+    </div>
+
+    <table class="w-full mt-6 border-collapse">
+      <thead>
+        <tr>
+          <th class="p-3 text-center">S.no</th>
+          <th class="p-3 text-center">Parameter Name</th>
+          <th class="p-3 text-center">Short Name</th>
+          <th class="p-3 text-center">UOM</th>
+          <th class="p-3 text-center">Register</th>
+          <th class="p-3 text-center">Data Type</th>
+          <th class="p-3 text-center">
+            Action
+            <button mat-icon-button class="ml-3 text-blue-600 align-middle" (click)="addParameter()">
+              <mat-icon>add_circle</mat-icon>
+            </button>
+          </th>
+        </tr>
+      </thead>
+      
+      <tbody>
+        <tr *ngFor="let param of parameters; let i = index">
+          <td class="p-3 text-center">{{ i + 1 }}</td>
+          <td class="p-3 text-center">
+            <input type="text" [(ngModel)]="param.parameterName" (blur)="markParameterAsTouched(i)" class="border rounded-lg p-2 w-full" />
+            <p class="text-red-500 text-xs mt-1" *ngIf="param.touched && !param.parameterName">Parameter Name is required</p>
+          </td>
+      
+          <!-- Remove input box but heading will show -->
+          <td class="p-3 text-center">
+            <input *ngIf="param.showInput" type="text" class="border rounded-lg p-2 w-full" />
+          </td>
+      
+          <td class="p-3 text-center">
+            <input *ngIf="param.showInput" type="text" class="border rounded-lg p-2 w-full" />
+          </td>
+      
+          <td class="p-3 text-center">
+            <input type="text" [(ngModel)]="param.register" (blur)="markParameterAsTouched(i)" class="border rounded-lg p-2 w-full" />
+            <p class="text-red-500 text-xs mt-1" *ngIf="param.touched && !param.register">Register is required</p>
+          </td>
+      
+          <td class="p-3 text-center">
+            <input type="text" [(ngModel)]="param.dataType" (blur)="markParameterAsTouched(i)" class="border rounded-lg p-2 w-full" />
+            <p class="text-red-500 text-xs mt-1" *ngIf="param.touched && !param.dataType">Data Type is required</p>
+          </td>
+      
+          <td class="p-3 text-center">
+            <button mat-icon-button class="text-blue-600" (click)="markParameterAsSaved(i)">
+              <mat-icon>check_circle</mat-icon>
+            </button>
+            <button mat-icon-button class="text-red-600 ml-2" (click)="deleteParameter(i)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+      
+    </table>
+    
+    <div class="flex gap-5 mt-5">
+      <button class="bg-blue-500 text-white py-2 px-6 rounded-lg" (click)="saveDevice()">Save</button>
+      <button class="bg-red-700 text-white py-2 px-6 rounded-lg" (click)="cancel()">Cancel</button>
+    </div>
+  </div>
+</div>

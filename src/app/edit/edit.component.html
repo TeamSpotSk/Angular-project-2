@@ -1,0 +1,101 @@
+<div class="bg-gray-100 p-6 shadow-md relative">
+  <h2 class="text-lg font-semibold text-gray-700">Edit Monitoring Device</h2>
+
+  <!-- Form Section -->
+  <div class="grid grid-cols-4 gap-4 mt-4">
+    <div>
+      <label class="text-gray-600 text-sm font-medium">Device Type *</label>
+      <input type="text" [(ngModel)]="device.deviceType" class="w-full border px-3 py-2 text-sm" />
+    </div>
+    <div>
+      <label class="text-gray-600 text-sm font-medium">Edge Controller *</label>
+      <input type="text" [(ngModel)]="device.edgeController" class="w-full border px-3 py-2 text-sm" />
+    </div>
+    <div>
+      <label class="text-gray-600 text-sm font-medium">Description *</label>
+      <input type="text" [(ngModel)]="device.description" class="w-full border px-3 py-2 text-sm" />
+    </div>
+    <div>
+      <label class="text-gray-600 text-sm font-medium">Product Name *</label>
+      <input type="text" [(ngModel)]="device.productName" class="w-full border px-3 py-2 text-sm" />
+    </div>
+  </div>
+
+  <!-- Checkbox -->
+  <div class="mt-4">
+    <input type="checkbox" [(ngModel)]="isActive" class="mr-2" />
+    <label class="text-gray-700 font-medium text-sm">Active</label>
+  </div>
+
+  <!-- Table Section -->
+  <div class="relative overflow-x-auto mt-6">
+    <table class="w-full text-sm text-left text-gray-700 border border-gray-300">
+      <thead class="bg-gray-200 text-gray-600 uppercase text-xs">
+        <tr>
+          <th class="py-3 px-4 border border-gray-300">S.no</th>
+          <th class="py-3 px-4 border border-gray-300">Parameter Name</th>
+          <th class="py-3 px-4 border border-gray-300">UOM</th>
+          <th class="py-3 px-4 border border-gray-300">Register</th>
+          <th class="py-3 px-4 border border-gray-300">Data Type</th>
+          <th class="py-3 px-4 border border-gray-300 text-center">
+            Action
+            <span class="inline-flex items-center">
+              <button mat-icon-button (click)="addParameter()" class="flex items-center ml-2">
+                <mat-icon class="text-blue-600 relative top-2">add</mat-icon>
+              </button>
+            </span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let param of parameters; let i = index">
+          <td class="py-3 px-4 border border-gray-300">{{ i + 1 }}</td>
+          <td class="py-3 px-4 border border-gray-300">
+            <ng-container *ngIf="!param.isEditing; else editName">
+              {{ param.name }}
+            </ng-container>
+            <ng-template #editName>
+              <input type="text" [(ngModel)]="param.name" class="w-full border px-2 py-1 text-sm" />
+            </ng-template>
+          </td>
+          <td class="py-3 px-4 border border-gray-300">
+            <ng-container *ngIf="!param.isEditing; else editUOM">
+              {{ param.uom }}
+            </ng-container>
+            <ng-template #editUOM>
+              <input type="text" [(ngModel)]="param.uom" class="w-full border px-2 py-1 text-sm" />
+            </ng-template>
+          </td>
+          <td class="py-3 px-4 border border-gray-300">
+            <ng-container *ngIf="!param.isEditing; else editRegister">
+              {{ param.register }}
+            </ng-container>
+            <ng-template #editRegister>
+              <input type="text" [(ngModel)]="param.register" class="w-full border px-2 py-1 text-sm" />
+            </ng-template>
+          </td>
+          <td class="py-3 px-4 border border-gray-300">
+            <ng-container *ngIf="!param.isEditing; else editDataType">
+              {{ param.datatype }}
+            </ng-container>
+            <ng-template #editDataType>
+              <input type="text" [(ngModel)]="param.datatype" class="w-full border px-2 py-1 text-sm" />
+            </ng-template>
+          </td>
+          <td class="py-3 px-4 border border-gray-300 text-center">
+            <button mat-icon-button (click)="param.isEditing ? saveParameter(param) : editParameter(param)">
+              <mat-icon class="text-blue-600">{{ param.isEditing ? 'save' : 'edit' }}</mat-icon>
+            </button>
+            <button mat-icon-button (click)="deleteParameter(i)">
+              <mat-icon class="text-red-600">delete</mat-icon>
+            </button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+           <!-- Footer Buttons -->
+<div class="flex mt-6">
+  <button class="bg-blue-600 text-white py-2 px-4 rounded-lg text-sm" (click)="updateDevice()">Update</button>
+  <button class="bg-red-100 text-red-600 py-2 px-4 rounded-lg text-sm ml-4" (click)="cancel()">Cancel</button>
+</div>

@@ -1,0 +1,77 @@
+<div class="container mx-auto px-6 py-8">
+  <h2 class="text-4xl font-bold text-black mb-6">Listing</h2>
+
+  <div class="bg-white p-8 rounded-xl shadow-lg relative">
+    <div class="flex justify-between items-center mb-6">
+      <h3 class="text-xl font-semibold text-gray-800">Monitoring Device Listing</h3>
+
+      <div class="flex gap-4 items-center">
+        <!-- Search Input -->
+        <div class="relative w-72">
+          <input 
+            class="border rounded-2xl pl-4 pr-10 py-2 w-full text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            type="text"
+            placeholder="Enter 3 characters to search"
+            [(ngModel)]="searchTerm"
+            (input)="filterDevices()">
+          <span class="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500">
+            <mat-icon>search</mat-icon>
+          </span>
+        </div>
+
+        <!-- Add Button -->
+        <button 
+          class="bg-navy bg-blue-900 text-white py-2 px-6 rounded-lg flex items-center gap-2 hover:bg-blue-700 transition"
+          (click)="navigateToAddPage()">
+          <mat-icon>add</mat-icon> Add
+        </button>
+      </div>
+    </div>
+
+    <!-- Table Section -->
+    <div class="overflow-x-auto">
+      <table class="min-w-full table-auto bg-white shadow-md rounded-xl">
+        <thead class="bg-blue-50 text-gray-600">
+          <tr>
+            <th class="px-4 py-3 text-left"></th>
+            <th class="px-4 py-3 text-left cursor-pointer" (click)="sortByName()">
+              Name
+              <span *ngIf="sortDirection !== ''">
+                {{ sortDirection === 'asc' ? '▲' : '▼' }}
+              </span>
+            </th>
+            
+            <th class="px-4 py-3 text-left">Description</th>
+            <th class="px-4 py-3 text-left">Edge Device</th>
+            <th class="px-4 py-3 text-left">Product</th>
+            <th class="px-4 py-3 text-left">Active</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let device of filteredDevices" class="border-b-[0.5px] border-gray-300">
+            <td class="px-4 py-3">
+              <mat-radio-group name="deviceSelection">
+                <mat-radio-button (click)="navigateToEditPage(device)"></mat-radio-button>
+              </mat-radio-group>
+            </td>
+            <td class="px-4 py-3">{{ device.name }}</td>
+            <td class="px-4 py-3">{{ device.description }}</td>
+            <td class="px-4 py-3">{{ device.edgeDevice }}</td>
+            <td class="px-4 py-3">{{ device.product }}</td>
+            <td class="px-4 py-3">
+              <span class="px-3 py-1 text-xs font-semibold rounded-full" 
+                    [ngClass]="{'bg-green-300': device.active, 'bg-red-300': !device.active}">
+                {{ device.active ? 'ACTIVE' : 'INACTIVE' }}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Paginator -->
+    <div class="mt-4">
+      <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    </div>
+  </div>
+</div>
