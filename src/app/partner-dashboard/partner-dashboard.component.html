@@ -1,0 +1,83 @@
+<!-- Navbar -->
+<nav class="flex items-center justify-between bg-white shadow-md px-6 py-3">
+    <div class="flex items-center space-x-6">
+        <!-- Logo -->
+        <img src="https://www.drumbuffer.com/assets/img/logo.png" alt="Logo" class="h-6">
+
+        <!-- Navigation Links with Icons -->
+        <a routerLink="/" class="flex items-center text-gray-700 font-semibold gap-2 hover:text-blue-500">
+            <i class="material-icons text-lg">bar_chart</i>
+            <span>Home</span>
+        </a>
+        <a routerLink="/" class="flex items-center text-gray-700 font-semibold gap-2 hover:text-blue-500">
+            <i class="material-icons text-lg">pie_chart</i>
+            <span>Control Center</span>
+        </a>
+        <a routerLink="/" class="flex items-center text-gray-700 font-semibold gap-2 hover:text-blue-500">
+            <i class="material-icons text-lg">lock</i>
+            <span>Permission</span>
+        </a>
+        <!-- ✅ Updated Partners link with Angular routing -->
+        <a routerLink="/partner-listing" class="flex items-center text-gray-700 font-semibold gap-2 hover:text-blue-500">
+            <i class="material-icons text-lg">link</i>
+            <span>Partners</span>
+        </a>
+        <a routerLink="/" class="flex items-center text-gray-700 font-semibold gap-2 hover:text-blue-500">
+            <i class="material-icons text-lg">memory</i>
+            <span>Devices</span>
+        </a>
+        <a routerLink="/" class="flex items-center text-gray-700 font-semibold gap-2 hover:text-blue-500">
+            <i class="material-icons text-lg">layers</i>
+            <span>Master Data</span>
+        </a>
+        <a routerLink="/" class="flex items-center text-gray-700 font-semibold gap-2 hover:text-blue-500">
+            <i class="material-icons text-lg">currency_rupee</i>
+            <span>Product</span>
+        </a>
+        <a routerLink="/" class="flex items-center text-gray-700 font-semibold gap-2 hover:text-blue-500">
+            <i class="material-icons text-lg">chat_bubble_outline</i>
+            <span>Support</span>
+        </a>
+    </div>
+
+   <!-- Right-side Icons -->
+<div class="relative flex items-center space-x-4">
+    <!-- Fullscreen Toggle -->
+    <button (click)="toggleFullScreen()" class="text-gray-600 hover:text-blue-500">
+        <i class="material-icons text-xl">fullscreen</i>
+    </button>
+
+    <!-- Help Dialog -->
+    <button (click)="openHelpDialog()" class="text-gray-600 hover:text-blue-500">
+        <i class="material-icons text-xl">help_outline</i>
+    </button>
+
+    <!-- Account Menu -->
+    <div class="relative">
+        <button (click)="toggleAccountMenu()" class="text-gray-600 relative hover:text-blue-500">
+            <i class="material-icons text-xl">account_circle</i>
+            <span class="absolute bottom-0 right-0 bg-green-500 rounded-full w-2 h-2"></span>
+        </button>
+        <!-- Dropdown Menu -->
+        <div *ngIf="showAccountMenu" class="absolute right-0 mt-2 w-40 bg-white border rounded-lg shadow-lg z-50">
+            <ul class="py-2">
+                <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">Profile</li>
+                <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">Settings</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Apps Menu -->
+    <div class="relative">
+        <button (click)="toggleAppsMenu()" class="text-gray-600 hover:text-blue-500">
+            <i class="material-icons text-xl">apps</i>
+        </button>
+        <!-- Dropdown Menu -->
+        <div *ngIf="showAppsMenu" class="absolute right-0 mt-2 w-32 bg-white border rounded-lg shadow-lg z-50">
+            <ul class="py-2">
+                <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">Login</li>
+                <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">Logout</li>
+            </ul>
+        </div>
+    </div>
+</div>
