@@ -1,0 +1,42 @@
+<div class="bg-gray-100 min-h-screen p-6">
+  <div class="bg-gray-200 p-6 rounded-lg shadow-lg w-full"> <!-- Grey Background -->
+    <h2 class="text-lg font-semibold mb-4">Add Gateway Type</h2>
+    <form (ngSubmit)="onSubmit(gatewayForm)" #gatewayForm="ngForm">
+      <div class="grid grid-cols-2 gap-4">
+        <!-- Gateway Type -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Gateway Type <span class="text-red-500">*</span></label>
+          <input type="text" class="w-full border border-gray-300 rounded-md p-2 mt-1 focus:border-blue-500 bg-white" 
+                 name="gatewayType" [(ngModel)]="gateway.gatewayType" required #gatewayType="ngModel">
+          <p class="text-red-500 text-xs mt-1" *ngIf="gatewayType.invalid && (gatewayType.touched || gatewayForm.submitted)">
+            Gateway Type is required
+          </p>
+        </div>
+        <!-- Description -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700">Description <span class="text-red-500">*</span></label>
+          <input type="text" class="w-full border border-gray-300 rounded-md p-2 mt-1 focus:border-blue-500 bg-white" 
+                 name="description" [(ngModel)]="gateway.description" required #description="ngModel">
+          <p class="text-red-500 text-xs mt-1" *ngIf="description.invalid && (description.touched || gatewayForm.submitted)">
+            Description is required
+          </p>
+        </div>
+      </div>
+      
+      <!-- Active Checkbox -->
+      <div class="flex items-center mt-4">
+        <input type="checkbox" id="active" class="mr-2" [(ngModel)]="gateway.active" name="active">
+        <label for="active" class="text-gray-700">Active</label>
+      </div>
+      
+      <!-- Buttons -->
+      <div class="mt-4 flex space-x-4">
+        <button type="submit" class="bg-[#4A3FCF] text-white px-4 py-1 rounded">Save</button>
+        <button type="button" 
+        class="bg-white border border-gray-300 text-[#E53935] px-4 py-1 rounded" 
+        (click)="goHome()">Cancel
+</button>
+      </div>
+    </form>
+  </div>
+  

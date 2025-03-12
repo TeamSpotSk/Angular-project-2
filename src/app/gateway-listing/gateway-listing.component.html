@@ -1,0 +1,121 @@
+<div class="p-4">
+  <!-- Page Title -->
+  <h2 class="text-lg font-semibold mt-4">Gateway Type Listing</h2>
+
+  <!-- Search & Add Button (Hidden when a radio button is selected) -->
+<div *ngIf="!selectedGatewayId" class="flex justify-end items-center mt-2">
+  <!-- Search Box -->
+  <div class="relative w-64">
+    <span class="absolute left-3 top-1/2 transform -translate-y-1/2 material-icons text-gray-400 text-sm">
+      search
+    </span>
+    <input
+      type="text"
+      [(ngModel)]="searchQuery"
+      (input)="updatePagination()"
+      placeholder="Enter 3 characters to search"
+      class="pl-10 py-1.5 text-sm text-gray-600 border border-gray-300 rounded-full w-full focus:ring focus:ring-blue-200 outline-none bg-gray-100"
+      aria-label="Search Gateways"
+    />
+  </div>
+
+  <!-- Add Button with Left Margin -->
+  <button 
+    class="ml-4 bg-[#4A3FCF] text-white py-1 px-4 rounded-lg flex items-center gap-2 hover:bg-[#4A46D1] transition shadow-md"
+    (click)="navigateToAddGateway()">
+    <span class="material-symbols-outlined text-white text-xl">add_circle</span> Add
+  </button>
+</div>
+
+  <!-- Action Buttons (Show only when a radio button is selected) -->
+  <div *ngIf="selectedGatewayId" class="flex justify-end gap-2 mt-2">
+    <button (click)="navigateToView()" class="btn-action text-blue-600 border-blue-300 hover:bg-blue-100">
+      <span class="material-icons">visibility</span> View
+    </button>
+    <button (click)="navigateToEdit()" class="btn-action text-blue-600 border-blue-300 hover:bg-blue-100">
+      <span class="material-icons">edit</span> Edit
+    </button>
+    <button (click)="confirmDelete()" class="btn-action text-red-600 border-red-300 hover:bg-red-100">
+      <span class="material-icons">delete</span> Delete
+    </button>
+    <button (click)="cancelSelection()" class="btn-action text-red-600 border-red-300 hover:bg-red-100">
+      <span class="material-icons">cancel</span> Cancel
+    </button>
+  </div>
+
+  <!-- Table Container -->
+<div class="table-container mt-4">
+  <table>
+    <thead>
+      <tr>
+        <th (click)="sortByGatewayType()" class="cursor-pointer text-gray-500 text-sm font-semibold tracking-wide">
+          Gateway Type           
+          <span *ngIf="isAscending">▲</span>
+          <span *ngIf="!isAscending">▼</span>
+        </th>
+        <th class="text-gray-500 text-sm font-semibold tracking-wide">Description</th>
+        <th class="text-gray-500 text-sm font-semibold tracking-wide">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let gateway of displayedGateways">
+        <td class="flex items-center space-x-2">
+          <input
+            type="radio"
+            name="gateway"
+            [(ngModel)]="selectedGatewayId"
+            [value]="gateway.id"
+            class="w-5 h-5 accent-blue-500"
+          />
+          {{ gateway.name }}
+        </td>
+        <td>{{ gateway.description }}</td>
+        <td>
+          <span class="bg-green-200 text-green-900 px-3 py-1 rounded-full text-xs font-bold tracking-wide">
+              ACTIVE
+          </span>
+      </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+  <!-- Pagination -->
+  <div class="flex justify-end items-center mt-4 text-gray-700 text-sm space-x-6">
+    <!-- Items per Page -->
+    <div class="flex items-center space-x-2">
+      <span>Items per page:</span>
+      <select
+        [(ngModel)]="itemsPerPage"
+        (change)="updatePagination()"
+        class="border border-gray-300 rounded px-3 py-1 text-sm focus:ring focus:ring-blue-200 outline-none"
+      >
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="30">30</option>
+      </select>
+    </div>
+
+    <!-- Pagination Info -->
+    <div class="min-w-[80px] text-center">
+      {{ (currentPage - 1) * itemsPerPage + 1 }} - {{ totalDisplayedItems }} of {{ gateways.length }}
+    </div>
+
+    <!-- Pagination Buttons -->
+    <div class="flex items-center space-x-2">
+      <button (click)="goToFirstPage()" [disabled]="currentPage === 1" class="pagination-btn">
+        <span class="material-icons">first_page</span>
+      </button>
+      <button (click)="goToPreviousPage()" [disabled]="currentPage === 1" class="pagination-btn">
+        <span class="material-icons">chevron_left</span>
+      </button>
+      <button (click)="goToNextPage()" [disabled]="currentPage * itemsPerPage >= gateways.length" class="pagination-btn">
+        <span class="material-icons">chevron_right</span>
+      </button>
+      <button (click)="goToLastPage()" [disabled]="currentPage * itemsPerPage >= gateways.length" class="pagination-btn">
+        <span class="material-icons">last_page</span>
+      </button>
+    </div>
+  </div>
+</div>
